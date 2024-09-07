@@ -226,31 +226,61 @@ namespace Product
             }
             else if (choice == 12)
             {
-                Console.WriteLine("Which product do you want to sell? \n" +
+                Console.WriteLine("Which category do you want to sell? \n" +
                                   "1. Notebook \n" +
                                   "2. Phone \n");
                 int userChoice = Convert.ToInt32(Console.ReadLine());
-
+                
                 Resell:
-                Console.WriteLine("How many do you want to sell?");
+                Console.Write("How many do you want to sell? ");
                 int userQuantity = Convert.ToInt32(Console.ReadLine());
 
 
                 if (userChoice == 1)
                 {
+                    ReModel:
+                    Console.WriteLine("Which model do you want to sell? \n" +
+                                      "1. Macbook Air \n" +
+                                      "2. Asus Rog");
+                    int notebookModel = Convert.ToInt32(Console.ReadLine());
                     foreach (ArrayList key in products)
                     {
                         if (key[0] == "Notebook")
                         {
-                            if ((int)key[4] >= userQuantity)
+                            if (notebookModel == 1)
                             {
-                                key[4] = (int)key[4] - userQuantity;
-                                Console.WriteLine($"{key[1]} quantity: {key[4]}");   
+                                if (key[2] == "Macbook Air")
+                                {
+                                    if ((int)key[4] >= userQuantity)
+                                    {
+                                        key[4] = (int)key[4] - userQuantity;
+                                        Console.WriteLine($"{key[2]} quantity: {key[4]}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Quantity is not enough!");
+                                    }
+                                }
+                            }
+                            else if (notebookModel == 2)
+                            {
+                                if (key[2] == "Rog")
+                                {
+                                    if ((int)key[4] >= userQuantity)
+                                    {
+                                        key[4] = (int)key[4] - userQuantity;
+                                        Console.WriteLine($"{key[2]} quantity: {key[4]}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Quantity is not enough!");
+                                    }
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("Quantity is not enough!");
-                                goto Resell;
+                                Console.WriteLine("There is not this type model!");
+                                goto ReModel;
                             }
                         }
                     }
@@ -261,7 +291,6 @@ namespace Product
                     {
                         if (key[0] == "Phone")
                         {
-                            Console.WriteLine("Helloo");
                             if ((int)key[4] >= userQuantity)
                             {
                                 key[4] = (int)key[4] - userQuantity;

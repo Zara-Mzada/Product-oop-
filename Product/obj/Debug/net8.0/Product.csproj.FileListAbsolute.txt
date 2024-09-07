@@ -12,3 +12,4 @@
 /Users/zara/RiderProjects/Product/Product/obj/Debug/net8.0/Product.pdb
 /Users/zara/RiderProjects/Product/Product/obj/Debug/net8.0/Product.genruntimeconfig.cache
 /Users/zara/RiderProjects/Product/Product/obj/Debug/net8.0/ref/Product.dll
+/Users/zara/RiderProjects/Product/Product/obj/Debug/net8.0/Product.sourcelink.json
