@@ -32,282 +32,295 @@ namespace Product
                               "12. Sell products \n" +
                               "Enter your choice"
             );
-            int choice = Convert.ToInt32(Console.ReadLine());
+            string stringchoice = Console.ReadLine();
+            int a;
+            bool choice = int.TryParse(stringchoice, out a);
+            
 
-            if (choice == 1)
-            {
-                product.ShowAllProducts();
-            }
-            else if (choice == 2)
-            {
-                ReCategory:
-                Console.WriteLine("Which category you want? \n" +
-                                  "1. Notebooks \n" +
-                                  "2. Phones \n" +
-                                  "Enter your choice");
-                int categoryChoice = Convert.ToInt32(Console.ReadLine());
 
-                if (categoryChoice == 1)
+            if (choice)
+            {
+                int userchoice = Convert.ToInt32(stringchoice);
+                if (userchoice == 1)
                 {
-                    int counter = 1;
+                    product.ShowAllProducts();
+                }
+                else if (userchoice == 2)
+                {
+                    ReCategory:
+                    Console.WriteLine("Which category you want? \n" +
+                                      "1. Notebooks \n" +
+                                      "2. Phones \n" +
+                                      "Enter your choice");
+                    int categoryChoice = Convert.ToInt32(Console.ReadLine());
+            
+                    if (categoryChoice == 1)
+                    {
+                        int counter = 1;
+                        foreach (ArrayList key in products)
+                        {
+                            if (key[0] == "Notebook")
+                            {
+                                Console.WriteLine($"PRODUCT: {counter}");
+                                foreach (var item in (ArrayList)key)
+                                {
+                                    Console.WriteLine(item);
+                                }
+                            }
+            
+                            counter++;
+                        }
+                    }
+                    else if (categoryChoice == 2)
+                    {
+                        int counter = 1;
+                        foreach (ArrayList key in products)
+                        {
+                            if (key[0] == "Phone")
+                            {
+                                Console.WriteLine($"PRODUCT: {counter}");
+                                foreach (var item in (ArrayList)key)
+                                {
+                                    Console.WriteLine(item);
+                                }
+                            }
+            
+                            counter++;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is not this category!");
+                        goto ReCategory;
+                    }
+                }
+                else if (userchoice == 3)
+                {
+                    Console.Write("Category: ");
+                    string category = Console.ReadLine();
+            
+                    Console.Write("Brand: ");
+                    string brand = Console.ReadLine();
+            
+                    Console.WriteLine("Model: ");
+                    string model = Console.ReadLine();
+            
+                    Console.WriteLine("Price: ");
+                    decimal price = Convert.ToDecimal(Console.ReadLine());
+            
+                    Console.WriteLine("Quantity: ");
+                    int quantity = Convert.ToInt32(Console.ReadLine());
+            
+                    product.Add(category, brand, model, price, quantity);
+                }
+                else if (userchoice == 4)
+                {
+                    product.ShowAllProducts();
+            
+                    Console.WriteLine("Enter number of deleting product: ");
+                    int userChoice = Convert.ToInt32(Console.ReadLine());
+            
+                    if (userChoice <= product.GetAllProducts().Count)
+                    {
+                        product.RemoveProduct(userChoice);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong product!");
+                    }
+                }
+                else if (userchoice == 5)
+                {
+            
+                    Console.Write("Update product's number: ");
+                    int index = Convert.ToInt32(Console.ReadLine());
+            
+                    Console.Write("Category: ");
+                    string category = Console.ReadLine();
+            
+                    Console.Write("Brand: ");
+                    string brand = Console.ReadLine();
+            
+                    Console.WriteLine("Model: ");
+                    string model = Console.ReadLine();
+            
+                    Console.WriteLine("Price: ");
+                    decimal price = Convert.ToDecimal(Console.ReadLine());
+            
+                    Console.WriteLine("Quantity: ");
+                    int quantity = Convert.ToInt32(Console.ReadLine());
+                    product.UpdateProduct(index, category, brand, model, price, quantity);
+            
+                    product.ShowAllProducts();
+                }
+                else if (userchoice == 6)
+                {
+                    decimal totalPrice = 0;
+                    foreach (ArrayList inside in products)
+                    {
+                        decimal price = (decimal)inside[3];
+                        totalPrice += price;
+                    }
+            
+                    Console.WriteLine($"Total price of products: {totalPrice}");
+                }
+                else if (userchoice == 7)
+                {
+                    decimal totalNotebooks = 0;
                     foreach (ArrayList key in products)
                     {
                         if (key[0] == "Notebook")
                         {
-                            Console.WriteLine($"PRODUCT: {counter}");
-                            foreach (var item in (ArrayList)key)
-                            {
-                                Console.WriteLine(item);
-                            }
+                            decimal price = (decimal)key[3];
+                            totalNotebooks += price;
                         }
-
-                        counter++;
                     }
+            
+                    Console.WriteLine($"Notebook's price: {totalNotebooks}");
                 }
-                else if (categoryChoice == 2)
+                else if (userchoice == 8)
                 {
-                    int counter = 1;
+                    decimal totalPhones = 0;
                     foreach (ArrayList key in products)
                     {
                         if (key[0] == "Phone")
                         {
-                            Console.WriteLine($"PRODUCT: {counter}");
-                            foreach (var item in (ArrayList)key)
-                            {
-                                Console.WriteLine(item);
-                            }
+                            decimal price = (decimal)key[3];
+                            totalPhones += price;
                         }
-
-                        counter++;
                     }
+            
+                    Console.WriteLine($"Notebook's price: {totalPhones}");
                 }
-                else
+                else if (userchoice == 9)
                 {
-                    Console.WriteLine("There is not this category!");
-                    goto ReCategory;
-                }
-            }
-            else if (choice == 3)
-            {
-                Console.Write("Category: ");
-                string category = Console.ReadLine();
-
-                Console.Write("Brand: ");
-                string brand = Console.ReadLine();
-
-                Console.WriteLine("Model: ");
-                string model = Console.ReadLine();
-
-                Console.WriteLine("Price: ");
-                decimal price = Convert.ToDecimal(Console.ReadLine());
-
-                Console.WriteLine("Quantity: ");
-                int quantity = Convert.ToInt32(Console.ReadLine());
-
-                product.Add(category, brand, model, price, quantity);
-            }
-            else if (choice == 4)
-            {
-                product.ShowAllProducts();
-
-                Console.WriteLine("Enter number of deleting product: ");
-                int userChoice = Convert.ToInt32(Console.ReadLine());
-
-                if (userChoice <= product.GetAllProducts().Count)
-                {
-                    product.RemoveProduct(userChoice);
-                }
-                else
-                {
-                    Console.WriteLine("Wrong product!");
-                }
-            }
-            else if (choice == 5)
-            {
-
-                Console.Write("Update product's number: ");
-                int index = Convert.ToInt32(Console.ReadLine());
-
-                Console.Write("Category: ");
-                string category = Console.ReadLine();
-
-                Console.Write("Brand: ");
-                string brand = Console.ReadLine();
-
-                Console.WriteLine("Model: ");
-                string model = Console.ReadLine();
-
-                Console.WriteLine("Price: ");
-                decimal price = Convert.ToDecimal(Console.ReadLine());
-
-                Console.WriteLine("Quantity: ");
-                int quantity = Convert.ToInt32(Console.ReadLine());
-                product.UpdateProduct(index, category, brand, model, price, quantity);
-
-                product.ShowAllProducts();
-            }
-            else if (choice == 6)
-            {
-                decimal totalPrice = 0;
-                foreach (ArrayList inside in products)
-                {
-                    decimal price = (decimal)inside[3];
-                    totalPrice += price;
-                }
-
-                Console.WriteLine($"Total price of products: {totalPrice}");
-            }
-            else if (choice == 7)
-            {
-                decimal totalNotebooks = 0;
-                foreach (ArrayList key in products)
-                {
-                    if (key[0] == "Notebook")
-                    {
-                        decimal price = (decimal)key[3];
-                        totalNotebooks += price;
-                    }
-                }
-
-                Console.WriteLine($"Notebook's price: {totalNotebooks}");
-            }
-            else if (choice == 8)
-            {
-                decimal totalPhones = 0;
-                foreach (ArrayList key in products)
-                {
-                    if (key[0] == "Phone")
-                    {
-                        decimal price = (decimal)key[3];
-                        totalPhones += price;
-                    }
-                }
-
-                Console.WriteLine($"Notebook's price: {totalPhones}");
-            }
-            else if (choice == 9)
-            {
-                int totalQuantityAll = 0;
-                foreach (ArrayList key in products)
-                {
-                    int quantity = (int)key[4];
-                    totalQuantityAll += quantity;
-                }
-
-                Console.WriteLine($"All quantity: {totalQuantityAll}");
-            }
-            else if (choice == 10)
-            {
-                int totalQuantityNotebooks = 0;
-                foreach (ArrayList key in products)
-                {
-                    if (key[0] == "Notebook")
+                    int totalQuantityAll = 0;
+                    foreach (ArrayList key in products)
                     {
                         int quantity = (int)key[4];
-                        totalQuantityNotebooks += quantity;
+                        totalQuantityAll += quantity;
                     }
+            
+                    Console.WriteLine($"All quantity: {totalQuantityAll}");
                 }
-
-                Console.WriteLine($"Notebooks quantity: {totalQuantityNotebooks}");
-            }
-            else if (choice == 11)
-            {
-                int totalQuantityPhones = 0;
-                foreach (ArrayList key in products)
+                else if (userchoice == 10)
                 {
-                    if (key[0] == "Phone")
-                    {
-                        int quantity = (int)key[4];
-                        totalQuantityPhones += quantity;
-                    }
-                }
-
-                Console.WriteLine($"Phones quantity: {totalQuantityPhones}");
-            }
-            else if (choice == 12)
-            {
-                Console.WriteLine("Which category do you want to sell? \n" +
-                                  "1. Notebook \n" +
-                                  "2. Phone \n");
-                int userChoice = Convert.ToInt32(Console.ReadLine());
-                
-                Resell:
-                Console.Write("How many do you want to sell? ");
-                int userQuantity = Convert.ToInt32(Console.ReadLine());
-
-
-                if (userChoice == 1)
-                {
-                    ReModel:
-                    Console.WriteLine("Which model do you want to sell? \n" +
-                                      "1. Macbook Air \n" +
-                                      "2. Asus Rog");
-                    int notebookModel = Convert.ToInt32(Console.ReadLine());
+                    int totalQuantityNotebooks = 0;
                     foreach (ArrayList key in products)
                     {
                         if (key[0] == "Notebook")
                         {
-                            if (notebookModel == 1)
-                            {
-                                if (key[2] == "Macbook Air")
-                                {
-                                    if ((int)key[4] >= userQuantity)
-                                    {
-                                        key[4] = (int)key[4] - userQuantity;
-                                        Console.WriteLine($"{key[2]} quantity: {key[4]}");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Quantity is not enough!");
-                                    }
-                                }
-                            }
-                            else if (notebookModel == 2)
-                            {
-                                if (key[2] == "Rog")
-                                {
-                                    if ((int)key[4] >= userQuantity)
-                                    {
-                                        key[4] = (int)key[4] - userQuantity;
-                                        Console.WriteLine($"{key[2]} quantity: {key[4]}");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Quantity is not enough!");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("There is not this type model!");
-                                goto ReModel;
-                            }
+                            int quantity = (int)key[4];
+                            totalQuantityNotebooks += quantity;
                         }
                     }
+            
+                    Console.WriteLine($"Notebooks quantity: {totalQuantityNotebooks}");
                 }
-                else if (userChoice == 2)
+                else if (userchoice == 11)
                 {
+                    int totalQuantityPhones = 0;
                     foreach (ArrayList key in products)
                     {
                         if (key[0] == "Phone")
                         {
-                            if ((int)key[4] >= userQuantity)
+                            int quantity = (int)key[4];
+                            totalQuantityPhones += quantity;
+                        }
+                    }
+            
+                    Console.WriteLine($"Phones quantity: {totalQuantityPhones}");
+                }
+                else if (userchoice == 12)
+                {
+                    Console.WriteLine("Which category do you want to sell? \n" +
+                                      "1. Notebook \n" +
+                                      "2. Phone \n");
+                    int userChoice = Convert.ToInt32(Console.ReadLine());
+                    
+                    Resell:
+                    Console.Write("How many do you want to sell? ");
+                    int userQuantity = Convert.ToInt32(Console.ReadLine());
+            
+            
+                    if (userChoice == 1)
+                    {
+                        ReModel:
+                        Console.WriteLine("Which model do you want to sell? \n" +
+                                          "1. Macbook Air \n" +
+                                          "2. Asus Rog");
+                        int notebookModel = Convert.ToInt32(Console.ReadLine());
+                        foreach (ArrayList key in products)
+                        {
+                            if (key[0] == "Notebook")
                             {
-                                key[4] = (int)key[4] - userQuantity;
-                                Console.WriteLine($"{key[1]} quantity: {key[4]}");   
-                            }
-                            else
-                            {
-                                Console.WriteLine("Quantity is not enough!");
-                                goto Resell;
+                                if (notebookModel == 1)
+                                {
+                                    if (key[2] == "Macbook Air")
+                                    {
+                                        if ((int)key[4] >= userQuantity)
+                                        {
+                                            key[4] = (int)key[4] - userQuantity;
+                                            Console.WriteLine($"{key[2]} quantity: {key[4]}");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Quantity is not enough!");
+                                        }
+                                    }
+                                }
+                                else if (notebookModel == 2)
+                                {
+                                    if (key[2] == "Rog")
+                                    {
+                                        if ((int)key[4] >= userQuantity)
+                                        {
+                                            key[4] = (int)key[4] - userQuantity;
+                                            Console.WriteLine($"{key[2]} quantity: {key[4]}");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Quantity is not enough!");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("There is not this type model!");
+                                    goto ReModel;
+                                }
                             }
                         }
                     }
+                    else if (userChoice == 2)
+                    {
+                        foreach (ArrayList key in products)
+                        {
+                            if (key[0] == "Phone")
+                            {
+                                if ((int)key[4] >= userQuantity)
+                                {
+                                    key[4] = (int)key[4] - userQuantity;
+                                    Console.WriteLine($"{key[1]} quantity: {key[4]}");   
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Quantity is not enough!");
+                                    goto Resell;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Wrong choice");
+                    goto Reaccess;
                 }
             }
             else
             {
-                Console.WriteLine("Wrong choice");
+                Console.WriteLine("Input is not a number!");
                 goto Reaccess;
             }
 
