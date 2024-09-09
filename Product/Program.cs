@@ -52,47 +52,59 @@ namespace Product
                                       "1. Notebooks \n" +
                                       "2. Phones \n" +
                                       "Enter your choice");
-                    int categoryChoice = Convert.ToInt32(Console.ReadLine());
-            
-                    if (categoryChoice == 1)
+                    string catchoice = Console.ReadLine();
+                    int b;
+                    bool checkcat = int.TryParse(catchoice, out b);
+
+                    if (checkcat)
                     {
-                        int counter = 1;
-                        foreach (ArrayList key in products)
+                        int categoryChoice = Convert.ToInt32(catchoice);
+                        if (categoryChoice == 1)
                         {
-                            if (key[0] == "Notebook")
+                            int counter = 1;
+                            foreach (ArrayList key in products)
                             {
-                                Console.WriteLine($"PRODUCT: {counter}");
-                                foreach (var item in (ArrayList)key)
+                                if (key[0] == "Notebook")
                                 {
-                                    Console.WriteLine(item);
+                                    Console.WriteLine($"PRODUCT: {counter}");
+                                    foreach (var item in (ArrayList)key)
+                                    {
+                                        Console.WriteLine(item);
+                                    }
                                 }
-                            }
             
-                            counter++;
+                                counter++;
+                            }
                         }
-                    }
-                    else if (categoryChoice == 2)
-                    {
-                        int counter = 1;
-                        foreach (ArrayList key in products)
+                        else if (categoryChoice == 2)
                         {
-                            if (key[0] == "Phone")
+                            int counter = 1;
+                            foreach (ArrayList key in products)
                             {
-                                Console.WriteLine($"PRODUCT: {counter}");
-                                foreach (var item in (ArrayList)key)
+                                if (key[0] == "Phone")
                                 {
-                                    Console.WriteLine(item);
+                                    Console.WriteLine($"PRODUCT: {counter}");
+                                    foreach (var item in (ArrayList)key)
+                                    {
+                                        Console.WriteLine(item);
+                                    }
                                 }
-                            }
             
-                            counter++;
+                                counter++;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is not this category!");
+                            goto ReCategory;
                         }
                     }
                     else
                     {
-                        Console.WriteLine("There is not this category!");
-                        goto ReCategory;
+                        Console.WriteLine("Enter number!");
+                        goto Reaccess;
                     }
+                    
                 }
                 else if (userchoice == 3)
                 {
@@ -144,11 +156,23 @@ namespace Product
                     Console.WriteLine("Model: ");
                     string model = Console.ReadLine();
             
+                    ReEnterNumber:
                     Console.WriteLine("Price: ");
                     decimal price = Convert.ToDecimal(Console.ReadLine());
-            
+                    if (price < 0)
+                    {
+                        Console.WriteLine("Wrong number!");
+                        goto ReEnterNumber;
+                    }
+
+                    ReEntreQuantity:
                     Console.WriteLine("Quantity: ");
                     int quantity = Convert.ToInt32(Console.ReadLine());
+                    if (quantity < 0)
+                    {
+                        Console.WriteLine("Wrong number!");
+                        goto ReEntreQuantity;
+                    }
                     product.UpdateProduct(index, category, brand, model, price, quantity);
             
                     product.ShowAllProducts();
